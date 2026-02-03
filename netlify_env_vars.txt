@@ -1,0 +1,2 @@
+GEMINI_API_KEY=AIzaSyBKXSElJR9iNBe6Gj3Yik6E51jgj_QEaok
+VITE_API_URL=https://script.google.com/macros/s/AKfycbwHqIMsKsO1FV0nkcRJuuqvsqQadY6fXv7AYiPrZWwtcP4dF49_zd7_gV-vNKo70gf0aw/exec

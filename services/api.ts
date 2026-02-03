@@ -1,7 +1,7 @@
 
 import { Report, StoredDocument, IncidentTemplate, UserProfile, User, Message, SharedEvent } from '../types';
 
-const DEFAULT_API_URL = 'https://script.google.com/macros/s/AKfycbwHqIMsKsO1FV0nkcRJuuqvsqQadY6fXv7AYiPrZWwtcP4dF49_zd7_gV-vNKo70gf0aw/exec'
+const DEFAULT_API_URL = import.meta.env.VITE_API_URL || 'https://script.google.com/macros/s/AKfycbwHqIMsKsO1FV0nkcRJuuqvsqQadY6fXv7AYiPrZWwtcP4dF49_zd7_gV-vNKo70gf0aw/exec'
 let API_URL = localStorage.getItem('custodyx_api_url') || DEFAULT_API_URL;
 
 export const setApiUrl = (url: string) => {

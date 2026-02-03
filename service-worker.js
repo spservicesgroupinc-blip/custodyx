@@ -8,7 +8,8 @@ const URLS_TO_PRECACHE = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/icon.svg',
+  '/icon.png',
+  '/icon-512.png'
 ];
 
 // --- INSTALL: Precache the core app shell ---

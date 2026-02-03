@@ -644,7 +644,13 @@ function saveSharedEventsBatch(userId, events) {
 
 function processEventsForSS(ssId, modifierId, otherId, events) {
   const ss = SpreadsheetApp.openById(ssId);
-  const sheet = ss.getSheetByName(USER_SHEETS.SHARED_EVENTS);
+  let sheet = ss.getSheetByName(USER_SHEETS.SHARED_EVENTS);
+  if (!sheet) {
+    // Lazy creation of SharedEvents sheet
+    sheet = ss.insertSheet(USER_SHEETS.SHARED_EVENTS);
+    // Add header row: id, creator_id, participants, data, start_time, updated_at
+    sheet.appendRow(['id', 'creator_id', 'participants', 'data', 'start_time', 'updated_at']);
+  }
   const existing = sheet.getDataRange().getValues();
   const idMap = new Map(); // ID -> {row, creatorId}
   

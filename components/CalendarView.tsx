@@ -34,7 +34,7 @@ const EventModal: React.FC<{
     const [category, setCategory] = useState<EventCategory>('parenting');
     const [notes, setNotes] = useState('');
     const [selectedChild, setSelectedChild] = useState<string>('');
-    
+
     // Parenting Specific
     const [assignedParent, setAssignedParent] = useState<'me' | 'coparent'>('me');
 
@@ -43,11 +43,11 @@ const EventModal: React.FC<{
             if (eventToEdit) {
                 setTitle(eventToEdit.title);
                 const d = new Date(eventToEdit.start);
-                setTime(d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: false}));
+                setTime(d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }));
                 setCategory(eventToEdit.category);
                 setNotes(eventToEdit.notes || '');
                 setSelectedChild(eventToEdit.childName || '');
-                
+
                 if (eventToEdit.category === 'parenting') {
                     setAssignedParent(eventToEdit.assignedTo === userId ? 'me' : 'coparent');
                 }
@@ -80,8 +80,8 @@ const EventModal: React.FC<{
             category,
             notes,
             childName: selectedChild,
-            assignedTo: category === 'parenting' 
-                ? (assignedParent === 'me' ? userId : userProfile?.linkedUserId || 'unknown') 
+            assignedTo: category === 'parenting'
+                ? (assignedParent === 'me' ? userId : userProfile?.linkedUserId || 'unknown')
                 : undefined
         };
         onSave(evt);
@@ -89,10 +89,10 @@ const EventModal: React.FC<{
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4" onClick={onClose}>
-            <div className="bg-white rounded-lg p-6 max-w-md w-full shadow-xl" onClick={e => e.stopPropagation()}>
+            <div className="bg-white rounded-lg p-6 max-w-md w-full shadow-xl max-h-[calc(100vh-4rem)] overflow-y-auto" onClick={e => e.stopPropagation()}>
                 <div className="flex justify-between items-center mb-4">
                     <h3 className="text-lg font-bold text-gray-900">{eventToEdit ? 'Edit Event' : 'Add Calendar Event'}</h3>
-                    <button onClick={onClose}><XMarkIcon className="w-6 h-6 text-gray-500"/></button>
+                    <button onClick={onClose}><XMarkIcon className="w-6 h-6 text-gray-500" /></button>
                 </div>
 
                 <div className="space-y-4">
@@ -115,13 +115,13 @@ const EventModal: React.FC<{
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Assigned Parent</label>
                             <div className="flex gap-2">
-                                <button 
+                                <button
                                     onClick={() => setAssignedParent('me')}
                                     className={`flex-1 py-2 rounded-md border text-sm font-medium ${assignedParent === 'me' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300'}`}
                                 >
                                     Me ({userProfile?.name || 'You'})
                                 </button>
-                                <button 
+                                <button
                                     onClick={() => setAssignedParent('coparent')}
                                     className={`flex-1 py-2 rounded-md border text-sm font-medium ${assignedParent === 'coparent' ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-gray-700 border-gray-300'}`}
                                 >
@@ -132,8 +132,8 @@ const EventModal: React.FC<{
                     ) : (
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                            <input 
-                                type="text" 
+                            <input
+                                type="text"
                                 value={title}
                                 onChange={e => setTitle(e.target.value)}
                                 placeholder="e.g., Soccer Practice"
@@ -145,17 +145,17 @@ const EventModal: React.FC<{
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Time</label>
-                            <input 
-                                type="time" 
-                                value={time} 
+                            <input
+                                type="time"
+                                value={time}
                                 onChange={e => setTime(e.target.value)}
                                 className="w-full p-2 border border-gray-300 rounded-md"
                             />
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Child (Optional)</label>
-                            <select 
-                                value={selectedChild} 
+                            <select
+                                value={selectedChild}
                                 onChange={e => setSelectedChild(e.target.value)}
                                 className="w-full p-2 border border-gray-300 rounded-md"
                             >
@@ -167,8 +167,8 @@ const EventModal: React.FC<{
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
-                        <textarea 
-                            value={notes} 
+                        <textarea
+                            value={notes}
                             onChange={e => setNotes(e.target.value)}
                             className="w-full p-2 border border-gray-300 rounded-md h-20"
                             placeholder="Details regarding pickup, location, etc."
@@ -194,15 +194,15 @@ const EventDetailsModal: React.FC<{
 }> = ({ event, onClose, onEdit, userProfile, userId }) => {
     if (!event) return null;
 
-    const myId = userId; 
+    const myId = userId;
 
     const getCreatorName = (id: string) => {
         if (id === myId) return "You";
-        return "Co-Parent"; 
+        return "Co-Parent";
     };
 
     const getCategoryColor = (cat: EventCategory) => {
-        switch(cat) {
+        switch (cat) {
             case 'school': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
             case 'sports': return 'bg-orange-100 text-orange-800 border-orange-200';
             case 'medical': return 'bg-red-100 text-red-800 border-red-200';
@@ -222,7 +222,7 @@ const EventDetailsModal: React.FC<{
                         <h2 className="text-xl font-bold text-gray-900 mt-2">{event.title}</h2>
                         {event.childName && <p className="text-sm text-gray-600">Child: {event.childName}</p>}
                     </div>
-                    <button onClick={onClose}><XMarkIcon className="w-6 h-6 text-gray-400 hover:text-gray-600"/></button>
+                    <button onClick={onClose}><XMarkIcon className="w-6 h-6 text-gray-400 hover:text-gray-600" /></button>
                 </div>
 
                 <div className="space-y-4 overflow-y-auto flex-1 pr-2">
@@ -230,7 +230,7 @@ const EventDetailsModal: React.FC<{
                         <ClockIcon className="w-5 h-5 text-gray-400" />
                         <span>{new Date(event.start).toLocaleString(undefined, { weekday: 'long', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
                     </div>
-                    
+
                     {event.notes && (
                         <div className="bg-gray-50 p-3 rounded-md text-sm text-gray-700 border border-gray-200">
                             {event.notes}
@@ -241,7 +241,7 @@ const EventDetailsModal: React.FC<{
                         <h4 className="text-xs font-bold text-gray-500 uppercase mb-3">Audit Log & History</h4>
                         <div className="space-y-3">
                             <div className="flex items-start gap-3 text-xs">
-                                <div className="mt-0.5"><UserCircleIcon className="w-4 h-4 text-blue-500"/></div>
+                                <div className="mt-0.5"><UserCircleIcon className="w-4 h-4 text-blue-500" /></div>
                                 <div>
                                     <p className="font-medium text-gray-900">Created by {getCreatorName(event.creatorId)}</p>
                                     <p className="text-gray-500">{new Date(event.start).toLocaleDateString()}</p>
@@ -249,7 +249,7 @@ const EventDetailsModal: React.FC<{
                             </div>
                             {event.auditLog?.slice().reverse().map((log, idx) => (
                                 <div key={idx} className="flex items-start gap-3 text-xs">
-                                    <div className="mt-0.5"><CheckCircleIcon className="w-4 h-4 text-green-500"/></div>
+                                    <div className="mt-0.5"><CheckCircleIcon className="w-4 h-4 text-green-500" /></div>
                                     <div>
                                         <p className="font-medium text-gray-900">
                                             {log.action === 'created' ? 'Created' : 'Edited'} by {log.userName || (log.userId === myId ? 'You' : 'Co-Parent')}
@@ -262,9 +262,9 @@ const EventDetailsModal: React.FC<{
                         </div>
                     </div>
                 </div>
-                
+
                 <div className="mt-6 pt-4 border-t border-gray-200 flex justify-end">
-                    <button 
+                    <button
                         onClick={onEdit}
                         className="px-4 py-2 bg-blue-50 text-blue-700 font-medium rounded-md hover:bg-blue-100 transition-colors"
                     >
@@ -283,18 +283,18 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [sharedEvents, setSharedEvents] = useState<SharedEvent[]>([]);
     const [activeTab, setActiveTab] = useState<'incidents' | 'shared'>('shared');
-    
+
     // Modals
     const [showEventModal, setShowEventModal] = useState(false);
     const [viewingEvent, setViewingEvent] = useState<SharedEvent | null>(null);
     const [eventToEdit, setEventToEdit] = useState<SharedEvent | null>(null);
     const [showPlanModal, setShowPlanModal] = useState(false);
-    
+
     // Plan Logic
     const [selectedTemplate, setSelectedTemplate] = useState<ParentingPlanTemplate | null>(null);
     const [planStartDate, setPlanStartDate] = useState(new Date().toISOString().split('T')[0]);
     const [myRoleInPattern, setMyRoleInPattern] = useState<'A' | 'B'>('A'); // Am I Parent A (0) or Parent B (1)?
-    
+
     const [showChallengeModal, setShowChallengeModal] = useState(false);
     const [imbalancePercent, setImbalancePercent] = useState(0);
     const [pendingEvents, setPendingEvents] = useState<SharedEvent[]>([]);
@@ -304,11 +304,11 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
 
     useEffect(() => {
         if (userProfile?.linkedUserId || userProfile) {
-             const userStr = localStorage.getItem('custodyx_user');
-             if(userStr) {
-                 const u = JSON.parse(userStr);
-                 api.getSharedEvents(u.userId).then(events => setSharedEvents(events || []));
-             }
+            const userStr = localStorage.getItem('custodyx_user');
+            if (userStr) {
+                const u = JSON.parse(userStr);
+                api.getSharedEvents(u.userId).then(events => setSharedEvents(events || []));
+            }
         }
     }, [userProfile]);
 
@@ -340,8 +340,8 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
     const isSameDay = (d1: Date | null, d2: Date | null) => {
         if (!d1 || !d2) return false;
         return d1.getFullYear() === d2.getFullYear() &&
-               d1.getMonth() === d2.getMonth() &&
-               d1.getDate() === d2.getDate();
+            d1.getMonth() === d2.getMonth() &&
+            d1.getDate() === d2.getDate();
     };
 
     // --- EVENT HANDLING ---
@@ -405,7 +405,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
             await api.saveSharedEvent(u.userId, finalEvent);
             setShowEventModal(false);
             setEventToEdit(null);
-        } catch(e) {
+        } catch (e) {
             alert("Failed to save event");
             // Revert on failure (simple reload or more complex revert logic)
         }
@@ -427,17 +427,17 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
 
         const startDate = new Date(planStartDate);
         const events: SharedEvent[] = [];
-        
+
         let myOvernights = 0;
         let totalDays = 365;
 
         for (let i = 0; i < totalDays; i++) {
             const currentDate = new Date(startDate);
             currentDate.setDate(startDate.getDate() + i);
-            
+
             const cycleIndex = i % selectedTemplate.pattern.length;
-            const parentIndex = selectedTemplate.pattern[cycleIndex]; 
-            
+            const parentIndex = selectedTemplate.pattern[cycleIndex];
+
             const targetIndex = myRoleInPattern === 'A' ? 0 : 1;
             const isMe = parentIndex === targetIndex;
 
@@ -457,7 +457,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
             const newEvent: SharedEvent = {
                 id: `plan_${Date.now()}_${i}`,
                 title: title,
-                start: currentDate.toISOString(), 
+                start: currentDate.toISOString(),
                 category: 'parenting',
                 type: 'other',
                 creatorId: u.userId,
@@ -468,7 +468,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
         }
 
         const pct = (myOvernights / totalDays) * 100;
-        
+
         setPendingEvents(events);
 
         if (pct < 35) {
@@ -527,8 +527,8 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
 
     return (
         <>
-            <EventModal 
-                isOpen={showEventModal} 
+            <EventModal
+                isOpen={showEventModal}
                 onClose={() => { setShowEventModal(false); setEventToEdit(null); }}
                 onSave={handleSaveEvent}
                 initialDate={selectedDate}
@@ -538,7 +538,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
                 eventToEdit={eventToEdit}
             />
 
-            <EventDetailsModal 
+            <EventDetailsModal
                 event={viewingEvent}
                 onClose={() => setViewingEvent(null)}
                 onEdit={handleEditClick}
@@ -546,9 +546,9 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
                 userId={userId}
             />
 
-            <CustodyChallengeModal 
+            <CustodyChallengeModal
                 isOpen={showChallengeModal}
-                onClose={() => { setShowChallengeModal(false); setPendingEvents([]); }} 
+                onClose={() => { setShowChallengeModal(false); setPendingEvents([]); }}
                 onReportGenerated={handleChallengeResolved}
                 userProfile={userProfile || null}
                 imbalancePercentage={imbalancePercent}
@@ -561,7 +561,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
                         <div className="space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Select Schedule Template</label>
-                                <select 
+                                <select
                                     className="w-full p-2 border border-gray-300 rounded-md"
                                     onChange={(e) => {
                                         const t = PARENTING_PLAN_TEMPLATES.find(p => p.id === e.target.value);
@@ -582,13 +582,13 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">I am...</label>
                                 <div className="flex gap-2">
-                                    <button 
+                                    <button
                                         onClick={() => setMyRoleInPattern('A')}
                                         className={`flex-1 py-2 border rounded ${myRoleInPattern === 'A' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'}`}
                                     >
                                         Parent A (Starts First)
                                     </button>
-                                    <button 
+                                    <button
                                         onClick={() => setMyRoleInPattern('B')}
                                         className={`flex-1 py-2 border rounded ${myRoleInPattern === 'B' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'}`}
                                     >
@@ -609,11 +609,11 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
                 <div className="flex justify-between items-center flex-wrap gap-4">
                     <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Calendar</h1>
                     <div className="flex gap-2">
-                        <button 
+                        <button
                             onClick={() => setShowPlanModal(true)}
                             className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 shadow-sm"
                         >
-                            <SparklesIcon className="w-4 h-4 text-blue-600"/>
+                            <SparklesIcon className="w-4 h-4 text-blue-600" />
                             Set Parenting Plan
                         </button>
                         <div className="flex bg-gray-100 p-1 rounded-lg">
@@ -640,21 +640,21 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
                         </div>
                         <button onClick={() => changeMonth(1)} className="p-2 rounded-full hover:bg-gray-100"><ChevronRightIcon className="w-6 h-6" /></button>
                     </div>
-                    
+
                     <div className="grid grid-cols-7 gap-1 text-center text-sm text-gray-500 font-medium border-b border-gray-200 pb-2 mb-2">
                         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => <div key={day}>{day}</div>)}
                     </div>
-                    
+
                     <div className="grid grid-cols-7 gap-1">
                         {placeholders.map((_, index) => <div key={`placeholder-${index}`} className="h-24 sm:h-32" />)}
                         {dates.map((date, index) => {
                             const dateKey = date.toISOString().split('T')[0];
                             const isSelected = isSameDay(date, selectedDate);
                             const isToday = isSameDay(date, new Date());
-                            
+
                             const dayEvents = eventsByDate.get(dateKey) || [];
                             const dayIncidents = reportsByDate.get(dateKey) || [];
-                            
+
                             // Sort: Parenting Time first (background-like), then specific events
                             const sortedEvents = [...dayEvents].sort((a, b) => {
                                 if (a.category === 'parenting') return -1;
@@ -663,8 +663,8 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
                             });
 
                             return (
-                                <div 
-                                    key={index} 
+                                <div
+                                    key={index}
                                     className={`min-h-[80px] sm:min-h-[100px] p-1 border rounded-lg flex flex-col cursor-pointer transition-colors overflow-hidden ${isSelected ? 'border-blue-500 bg-blue-50' : 'border-gray-100 hover:bg-gray-50'}`}
                                     onClick={() => {
                                         setSelectedDate(date);
@@ -680,11 +680,11 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
                                         <span className={`text-xs font-semibold w-6 h-6 flex items-center justify-center rounded-full ${isToday ? 'bg-blue-900 text-white' : 'text-gray-700'}`}>{date.getDate()}</span>
                                         {activeTab === 'incidents' && dayIncidents.length > 0 && <span className="w-2 h-2 bg-red-500 rounded-full"></span>}
                                     </div>
-                                    
+
                                     <div className="flex-1 space-y-1 overflow-hidden">
                                         {activeTab === 'shared' && sortedEvents.slice(0, 3).map((evt) => (
-                                            <div 
-                                                key={evt.id} 
+                                            <div
+                                                key={evt.id}
                                                 className={`text-xs truncate px-1.5 py-0.5 rounded-sm font-medium ${getEventStyle(evt, userId)}`}
                                                 title={evt.title}
                                                 onClick={(e) => { e.stopPropagation(); setViewingEvent(evt); }}
@@ -707,7 +707,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
                                 {selectedDate.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
                             </h2>
                             {activeTab === 'shared' && (
-                                <button 
+                                <button
                                     onClick={() => { setShowEventModal(true); setEventToEdit(null); }}
                                     className="flex items-center gap-2 px-3 py-1.5 bg-blue-900 text-white text-sm font-medium rounded-md hover:bg-blue-800"
                                 >
@@ -732,15 +732,15 @@ const CalendarView: React.FC<CalendarViewProps> = ({ reports, onDiscussIncident,
                             <div className="space-y-3">
                                 {eventsByDate.get(selectedDate.toISOString().split('T')[0])?.map(evt => {
                                     return (
-                                        <div 
-                                            key={evt.id} 
+                                        <div
+                                            key={evt.id}
                                             className={`p-3 rounded-md hover:shadow-md cursor-pointer flex justify-between items-center group transition-all mb-2 ${getEventStyle(evt, userId)}`}
                                             onClick={() => setViewingEvent(evt)}
                                         >
                                             <div className="flex-1">
                                                 <p className="font-semibold text-inherit">{evt.title}</p>
                                                 <div className="flex gap-2 text-xs opacity-90">
-                                                    <span>{new Date(evt.start).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                                                    <span>{new Date(evt.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                                                     {evt.childName && <span>• {evt.childName}</span>}
                                                 </div>
                                             </div>

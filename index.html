@@ -1,224 +1,249 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <title>VerityNow.AI</title>
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#1e3a8a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="VerityNow">
-    <link rel="apple-touch-icon" href="/icon.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              serif: ['Times New Roman', 'serif'],
-            },
-            colors: {
-                blue: {
-                    50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa',
-                    500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a', 950: '#172554',
-                },
-                green: {
-                    50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac', 400: '#4ade80',
-                    500: '#22c55e', 600: '#16a34a', 700: '#059669', 800: '#047857', 900: '#065f46', 950: '#022c22',
-                },
-                amber: {
-                    50: '#fffbeb', 100: '#fef3c7', 200: '#fde68a', 300: '#fcd34d', 400: '#fbbf24',
-                    500: '#f59e0b', 600: '#d97706', 700: '#b45309', 800: '#92400e', 900: '#78350f', 950: '#451a03',
-                },
-                red: {
-                    50: '#fef2f2', 100: '#fee2e2', 200: '#fecaca', 300: '#fca5a5', 400: '#f87171',
-                    500: '#ef4444', 600: '#dc2626', 700: '#b91c1c', 800: '#991b1b', 900: '#7f1d1d', 950: '#450a0a',
-                },
-                gray: {
-                    50: '#f9fafb', 100: '#f3f4f6', 200: '#e5e7eb', 300: '#d1d5db', 400: '#9ca3af',
-                    500: '#6b7280', 600: '#4b5563', 700: '#374151', 800: '#1f2937', 900: '#111827',
-                }
-            }
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content" />
+  <title>VerityNow.AI</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1e3a8a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="VerityNow">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Times New Roman', 'serif'],
           },
-        },
-      }
-    </script>
-    <style>
-      /* Hide scrollbar for Chrome, Safari and Opera */
-      .no-scrollbar::-webkit-scrollbar {
-          display: none;
-      }
-      /* Hide scrollbar for IE, Edge and Firefox */
-      .no-scrollbar {
-          -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
-      }
-
-      @media print {
-        /* Hide everything by default */
-        body * {
-          visibility: hidden;
-        }
-
-        /* Show only the printable area and its children */
-        .printable-area, .printable-area * {
-          visibility: visible;
-        }
-
-        /* Position the printable area to take up the whole page */
-        .printable-area {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: auto;
-          padding: 0;
-          margin: 0;
-          border: none;
-          box-shadow: none;
-        }
-
-        .no-print {
-          display: none !important;
-        }
-        
-        /* PDF-specific styles from user's script */
-        @page { 
-          size: letter;
-          margin: 1in;
-
-          @bottom-right {
-            content: "Page " counter(page);
-            font-family: "Times New Roman", Times, serif;
-            font-size: 10pt;
-            color: #333;
+          colors: {
+            blue: {
+              50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa',
+              500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a', 950: '#172554',
+            },
+            green: {
+              50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac', 400: '#4ade80',
+              500: '#22c55e', 600: '#16a34a', 700: '#059669', 800: '#047857', 900: '#065f46', 950: '#022c22',
+            },
+            amber: {
+              50: '#fffbeb', 100: '#fef3c7', 200: '#fde68a', 300: '#fcd34d', 400: '#fbbf24',
+              500: '#f59e0b', 600: '#d97706', 700: '#b45309', 800: '#92400e', 900: '#78350f', 950: '#451a03',
+            },
+            red: {
+              50: '#fef2f2', 100: '#fee2e2', 200: '#fecaca', 300: '#fca5a5', 400: '#f87171',
+              500: '#ef4444', 600: '#dc2626', 700: '#b91c1c', 800: '#991b1b', 900: '#7f1d1d', 950: '#450a0a',
+            },
+            gray: {
+              50: '#f9fafb', 100: '#f3f4f6', 200: '#e5e7eb', 300: '#d1d5db', 400: '#9ca3af',
+              500: '#6b7280', 600: '#4b5563', 700: '#374151', 800: '#1f2937', 900: '#111827',
+            }
           }
-        }
-        html, body { 
-          font-family: "Times New Roman", Times, serif; 
-          color: #000;
-          background-color: #fff !important; /* Ensure white background */
-          counter-reset: page;
-        }
-        .pdf-container {
-          margin: 0; 
-          padding: 0; 
-          line-height: 1.5;
-          font-size: 12pt; 
-          -webkit-font-smoothing: antialiased; 
-        }
-        .pdf-header { 
-          text-align: center; 
-          margin-bottom: 24pt; 
-          border-bottom: 2px solid #000;
-          padding-bottom: 12pt;
-        }
-        .pdf-h1 { 
-          font-size: 16pt !important; 
-          margin-bottom: 6pt; 
-          font-weight: bold;
-          text-transform: uppercase;
-        }
-        .pdf-h2 { 
-          font-size: 13pt !important; 
-          margin-top: 20pt; 
-          margin-bottom: 10pt; 
-          font-weight: bold;
-          text-decoration: underline;
-          text-transform: uppercase;
-        }
-        .pdf-meta { 
-          font-size: 10pt !important; 
-          color: #333; 
-          margin-top: 8pt; 
-        }
-        .pdf-preamble { 
-          margin-bottom: 18pt; 
-          text-align: justify;
-        }
-        .pdf-section { 
-          margin-bottom: 18pt; 
-          page-break-inside: avoid;
-        }
-        .pdf-body-paragraph { 
-          margin: 8pt 0; 
-          text-align: justify; 
-          text-indent: 0.5in;
-          widows: 2;
-          orphans: 2;
-        }
-        .pdf-ul { 
-          margin: 8pt 0 8pt 0.5in; 
-          padding-left: 0;
-          list-style-type: disc;
-        }
-        .pdf-li {
-          margin: 4pt 0;
-          text-align: justify;
-          widows: 2;
-          orphans: 2;
-        }
-        .pdf-signature { 
-          margin-top: 36pt; 
-          page-break-inside: avoid;
-        }
-        .pdf-sig-line { 
-          border-top: 1px solid #000; 
-          width: 300px; 
-          margin-top: 48pt; 
-          display: inline-block;
-        }
-        .pdf-sig-label {
-          margin-top: 4pt;
-          font-size: 10pt !important;
-        }
-        .pdf-notes { 
-          font-size: 9pt !important; 
-          color: #666; 
-          margin-top: 18pt; 
-          font-style: italic;
+        },
+      },
+    }
+  </script>
+  <style>
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
+
+    @media print {
+
+      /* Hide everything by default */
+      body * {
+        visibility: hidden;
+      }
+
+      /* Show only the printable area and its children */
+      .printable-area,
+      .printable-area * {
+        visibility: visible;
+      }
+
+      /* Position the printable area to take up the whole page */
+      .printable-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: auto;
+        padding: 0;
+        margin: 0;
+        border: none;
+        box-shadow: none;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      /* PDF-specific styles from user's script */
+      @page {
+        size: letter;
+        margin: 1in;
+
+        @bottom-right {
+          content: "Page " counter(page);
+          font-family: "Times New Roman", Times, serif;
+          font-size: 10pt;
+          color: #333;
         }
       }
 
-      /* Standard Fade In Up (No Horizontal Shift) */
-      .animate-fade-in-up {
-        animation: fade-in-up 0.5s ease-out forwards;
+      html,
+      body {
+        font-family: "Times New Roman", Times, serif;
+        color: #000;
+        background-color: #fff !important;
+        /* Ensure white background */
+        counter-reset: page;
       }
 
-      /* Centered Fade In Up (For Toasts/Modals centered with left-50%) */
-      .animate-fade-in-up-centered {
-        animation: fade-in-up-centered 0.5s ease-out forwards;
+      .pdf-container {
+        margin: 0;
+        padding: 0;
+        line-height: 1.5;
+        font-size: 12pt;
+        -webkit-font-smoothing: antialiased;
       }
 
-      @keyframes fade-in-up {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+      .pdf-header {
+        text-align: center;
+        margin-bottom: 24pt;
+        border-bottom: 2px solid #000;
+        padding-bottom: 12pt;
       }
 
-      @keyframes fade-in-up-centered {
-        from {
-          opacity: 0;
-          transform: translateY(20px) translateX(-50%);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) translateX(-50%);
-        }
+      .pdf-h1 {
+        font-size: 16pt !important;
+        margin-bottom: 6pt;
+        font-weight: bold;
+        text-transform: uppercase;
       }
-    </style>
+
+      .pdf-h2 {
+        font-size: 13pt !important;
+        margin-top: 20pt;
+        margin-bottom: 10pt;
+        font-weight: bold;
+        text-decoration: underline;
+        text-transform: uppercase;
+      }
+
+      .pdf-meta {
+        font-size: 10pt !important;
+        color: #333;
+        margin-top: 8pt;
+      }
+
+      .pdf-preamble {
+        margin-bottom: 18pt;
+        text-align: justify;
+      }
+
+      .pdf-section {
+        margin-bottom: 18pt;
+        page-break-inside: avoid;
+      }
+
+      .pdf-body-paragraph {
+        margin: 8pt 0;
+        text-align: justify;
+        text-indent: 0.5in;
+        widows: 2;
+        orphans: 2;
+      }
+
+      .pdf-ul {
+        margin: 8pt 0 8pt 0.5in;
+        padding-left: 0;
+        list-style-type: disc;
+      }
+
+      .pdf-li {
+        margin: 4pt 0;
+        text-align: justify;
+        widows: 2;
+        orphans: 2;
+      }
+
+      .pdf-signature {
+        margin-top: 36pt;
+        page-break-inside: avoid;
+      }
+
+      .pdf-sig-line {
+        border-top: 1px solid #000;
+        width: 300px;
+        margin-top: 48pt;
+        display: inline-block;
+      }
+
+      .pdf-sig-label {
+        margin-top: 4pt;
+        font-size: 10pt !important;
+      }
+
+      .pdf-notes {
+        font-size: 9pt !important;
+        color: #666;
+        margin-top: 18pt;
+        font-style: italic;
+      }
+    }
+
+    /* Standard Fade In Up (No Horizontal Shift) */
+    .animate-fade-in-up {
+      animation: fade-in-up 0.5s ease-out forwards;
+    }
+
+    /* Centered Fade In Up (For Toasts/Modals centered with left-50%) */
+    .animate-fade-in-up-centered {
+      animation: fade-in-up-centered 0.5s ease-out forwards;
+    }
+
+    @keyframes fade-in-up {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fade-in-up-centered {
+      from {
+        opacity: 0;
+        transform: translateY(20px) translateX(-50%);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) translateX(-50%);
+      }
+    }
+  </style>
   <script type="importmap">
 {
   "imports": {
@@ -231,10 +256,12 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/index.css">
 </head>
-  <body class="bg-gray-100 font-sans text-gray-900">
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+
+<body class="bg-gray-100 font-sans text-gray-900">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
 </html>

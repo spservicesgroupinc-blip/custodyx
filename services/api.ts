@@ -69,5 +69,8 @@ export const api = {
         const res = await request('getSharedEvents', { userId });
         return res.events as SharedEvent[];
     },
-    saveSharedEvent: async (userId: string, event: SharedEvent) => request('saveSharedEventsBatch', { userId, events: [event] })
+    saveSharedEvent: async (userId: string, event: SharedEvent) => request('saveSharedEventsBatch', { userId, events: [event] }),
+
+    // AI Proxy (Secure)
+    generateAI: async (model: string, payload: any) => request('generateAI', { model, payload }),
 };

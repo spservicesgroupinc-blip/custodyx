@@ -31,13 +31,13 @@ const App: React.FC = () => {
     const [authMode, setAuthMode] = useState<'login' | 'signup' | null>(null);
 
     const [view, setView] = useState<View>('dashboard');
-    
+
     // Data State
     const [reports, setReports] = useState<Report[]>([]);
     const [documents, setDocuments] = useState<StoredDocument[]>([]);
     const [userProfile, setUserProfile] = useState<UserProfileType | null>(null);
     const [incidentTemplates, setIncidentTemplates] = useState<IncidentTemplate[]>([]);
-    
+
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isAgentOpen, setIsAgentOpen] = useState(false);
     const [activeReportContext, setActiveReportContext] = useState<Report | null>(null);
@@ -63,9 +63,9 @@ const App: React.FC = () => {
     // Token & Tier Management
     const handleConsumeTokens = useCallback((cost: number = 1) => {
         if (!userProfile) return false;
-        
+
         const currentTokens = userProfile.tokens !== undefined ? userProfile.tokens : 50; // Default logic
-        
+
         if (currentTokens < cost) {
             setUpgradeFeature('AI Tokens');
             setShowUpgradeModal(true);
@@ -98,7 +98,7 @@ const App: React.FC = () => {
         if (!user) return;
         const scriptureInterval = setInterval(() => {
             setShowScripture(true);
-        }, 7 * 60 * 1000); 
+        }, 7 * 60 * 1000);
 
         return () => clearInterval(scriptureInterval);
     }, [user]);
@@ -110,7 +110,7 @@ const App: React.FC = () => {
             const data = await api.syncData(userId);
             setReports(data.reports || []);
             setIncidentTemplates(data.templates || []);
-            
+
             const profile = data.profile || null;
             if (profile) {
                 if (data.linkedUserId && !profile.linkedUserId) {
@@ -121,7 +121,7 @@ const App: React.FC = () => {
                 if (profile.tokens === undefined) profile.tokens = 50;
             }
             setUserProfile(profile);
-            
+
             setDocuments(data.documents || []);
         } catch (error) {
             console.error("Failed to sync data:", error);
@@ -131,7 +131,7 @@ const App: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        if (!process.env.API_KEY) {
+        if (false) { // Check removed for security (Key in backend)
             console.error("Configuration Error: API_KEY is not defined.");
             setIsConfigError(true);
         }
@@ -147,7 +147,7 @@ const App: React.FC = () => {
                     const swUrl = new URL('/service-worker.js', window.location.origin).toString();
                     const registration = await navigator.serviceWorker.register(swUrl);
                     serviceWorkerRegistration.current = registration;
-                    
+
                     registration.addEventListener('updatefound', () => {
                         const newWorker = registration.installing;
                         if (newWorker) {
@@ -217,9 +217,9 @@ const App: React.FC = () => {
         setReports(prev => [...prev, newReport]);
         setNewReportDate(null);
         if (user) api.saveReports(user.userId, [newReport]);
-        setShowScripture(true); 
+        setShowScripture(true);
     };
-    
+
     const handleAddDocument = useCallback((newDocument: StoredDocument) => {
         setDocuments(prev => [...prev, newDocument]);
         if (user) api.saveDocuments(user.userId, [newDocument]);
@@ -228,7 +228,7 @@ const App: React.FC = () => {
     const handleDeleteDocument = useCallback((documentId: string) => {
         setDocuments(prev => prev.filter(doc => doc.id !== documentId));
     }, []);
-    
+
     const handleAddTemplate = useCallback((newTemplate: IncidentTemplate) => {
         setIncidentTemplates(prev => [...prev, newTemplate]);
         if (user) api.saveTemplates(user.userId, [newTemplate]);
@@ -261,7 +261,7 @@ const App: React.FC = () => {
             setShowUpgradeModal(true);
             return;
         }
-        
+
         const reportToDiscuss = reports.find(r => r.id === reportId);
         if (reportToDiscuss) {
             setActiveReportContext(reportToDiscuss);
@@ -277,7 +277,7 @@ const App: React.FC = () => {
             handleViewChange('insights');
         }
     };
-    
+
     const handleGenerateDraftFromInsight = (analysisText: string, motionType: string) => {
         // Legal assistant feature
         if (userProfile?.tier === 'Free') {
@@ -339,7 +339,7 @@ const App: React.FC = () => {
     if (isConfigError) {
         return (
             <div className="bg-red-50 min-h-screen flex items-center justify-center p-4 text-center">
-                 <div className="bg-white p-8 rounded-lg shadow-lg border border-red-200 max-w-md">
+                <div className="bg-white p-8 rounded-lg shadow-lg border border-red-200 max-w-md">
                     <h1 className="text-2xl font-bold text-red-800">Configuration Error</h1>
                     <p className="mt-2 text-red-700">Missing API Key.</p>
                 </div>
@@ -362,13 +362,13 @@ const App: React.FC = () => {
         }
         return <LandingPage onGetStarted={() => setAuthMode('signup')} onLogin={() => setAuthMode('login')} />;
     }
-    
+
     if (!isLoadingData && !userProfile && view !== 'profile') {
         return (
-             <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4">
-                 <UserProfile 
-                    onSave={handleProfileSave} 
-                    onCancel={() => {}}
+            <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+                <UserProfile
+                    onSave={handleProfileSave}
+                    onCancel={() => { }}
                     currentProfile={null}
                     isInitialSetup={true}
                     userId={user.userId}
@@ -382,120 +382,120 @@ const App: React.FC = () => {
         const selectionProps = { selectedReportIds, onToggleReportSelection: handleToggleReportSelection };
         switch (view) {
             case 'dashboard':
-                return <Dashboard 
-                            userProfile={userProfile}
-                            reports={reports}
-                            onViewChange={handleViewChange}
-                            onAnalyzeIncident={handleAnalyzeIncident}
-                        />;
+                return <Dashboard
+                    userProfile={userProfile}
+                    reports={reports}
+                    onViewChange={handleViewChange}
+                    onAnalyzeIncident={handleAnalyzeIncident}
+                />;
             case 'new_report':
-                return <ChatInterface 
-                            onReportGenerated={handleReportGenerated} 
-                            userProfile={userProfile}
-                            initialDate={newReportDate} 
-                            templates={incidentTemplates}
-                            onAddTemplate={handleAddTemplate}
-                            onDeleteTemplate={handleDeleteTemplate}
-                            onNavToTimeline={() => handleViewChange('timeline')}
-                            isOffline={isOffline}
-                            onConsumeTokens={handleConsumeTokens}
-                            onAddDocument={handleAddDocument}
-                        />;
+                return <ChatInterface
+                    onReportGenerated={handleReportGenerated}
+                    userProfile={userProfile}
+                    initialDate={newReportDate}
+                    templates={incidentTemplates}
+                    onAddTemplate={handleAddTemplate}
+                    onDeleteTemplate={handleDeleteTemplate}
+                    onNavToTimeline={() => handleViewChange('timeline')}
+                    isOffline={isOffline}
+                    onConsumeTokens={handleConsumeTokens}
+                    onAddDocument={handleAddDocument}
+                />;
             case 'patterns':
-                return <PatternAnalysis 
-                            reports={reports} 
-                            documents={documents}
-                            userProfile={userProfile} 
-                            isOffline={isOffline}
-                            onConsumeTokens={handleConsumeTokens}
-                        />;
+                return <PatternAnalysis
+                    reports={reports}
+                    documents={documents}
+                    userProfile={userProfile}
+                    isOffline={isOffline}
+                    onConsumeTokens={handleConsumeTokens}
+                />;
             case 'insights':
-                return <DeepAnalysis 
-                            reports={reports} 
-                            userProfile={userProfile}
-                            activeInsightContext={activeInsightContext}
-                            onBackToTimeline={handleBackToTimeline}
-                            onGenerateDraft={handleGenerateDraftFromInsight}
-                            onAddDocument={handleAddDocument}
-                            isOffline={isOffline}
-                            onConsumeTokens={handleConsumeTokens}
-                        />;
+                return <DeepAnalysis
+                    reports={reports}
+                    userProfile={userProfile}
+                    activeInsightContext={activeInsightContext}
+                    onBackToTimeline={handleBackToTimeline}
+                    onGenerateDraft={handleGenerateDraftFromInsight}
+                    onAddDocument={handleAddDocument}
+                    isOffline={isOffline}
+                    onConsumeTokens={handleConsumeTokens}
+                />;
             case 'documents':
-                return <DocumentLibrary 
-                            documents={documents}
-                            onAddDocument={handleAddDocument}
-                            onDeleteDocument={handleDeleteDocument}
-                            user={user}
-                        />;
+                return <DocumentLibrary
+                    documents={documents}
+                    onAddDocument={handleAddDocument}
+                    onDeleteDocument={handleDeleteDocument}
+                    user={user}
+                />;
             case 'assistant':
-                return <LegalAssistant 
-                            reports={reports} 
-                            documents={documents}
-                            userProfile={userProfile}
-                            activeReportContext={activeReportContext}
-                            clearActiveReportContext={() => setActiveReportContext(null)}
-                            initialQuery={initialLegalQuery}
-                            clearInitialQuery={() => setInitialLegalQuery(null)}
-                            activeAnalysisContext={activeAnalysisContext}
-                            clearActiveAnalysisContext={() => setActiveAnalysisContext(null)}
-                            onAddDocument={handleAddDocument}
-                            isOffline={isOffline}
-                            onConsumeTokens={handleConsumeTokens}
-                        />;
+                return <LegalAssistant
+                    reports={reports}
+                    documents={documents}
+                    userProfile={userProfile}
+                    activeReportContext={activeReportContext}
+                    clearActiveReportContext={() => setActiveReportContext(null)}
+                    initialQuery={initialLegalQuery}
+                    clearInitialQuery={() => setInitialLegalQuery(null)}
+                    activeAnalysisContext={activeAnalysisContext}
+                    clearActiveAnalysisContext={() => setActiveAnalysisContext(null)}
+                    onAddDocument={handleAddDocument}
+                    isOffline={isOffline}
+                    onConsumeTokens={handleConsumeTokens}
+                />;
             case 'profile':
-                return <UserProfile 
-                            onSave={handleProfileSave} 
-                            onCancel={() => handleViewChange('dashboard')}
-                            currentProfile={userProfile}
-                            userId={user.userId}
-                            onRefreshData={() => loadUserData(user.userId)}
-                        />;
+                return <UserProfile
+                    onSave={handleProfileSave}
+                    onCancel={() => handleViewChange('dashboard')}
+                    currentProfile={userProfile}
+                    userId={user.userId}
+                    onRefreshData={() => loadUserData(user.userId)}
+                />;
             case 'calendar':
-                return <CalendarView 
-                            reports={reports}
-                            onDiscussIncident={handleDiscussIncident}
-                            onAnalyzeIncident={handleAnalyzeIncident}
-                            onDayClick={handleCalendarDayClick}
-                            {...selectionProps}
-                            userProfile={userProfile}
-                        />;
+                return <CalendarView
+                    reports={reports}
+                    onDiscussIncident={handleDiscussIncident}
+                    onAnalyzeIncident={handleAnalyzeIncident}
+                    onDayClick={handleCalendarDayClick}
+                    {...selectionProps}
+                    userProfile={userProfile}
+                />;
             case 'messaging':
-                return <Messaging 
-                            user={user} 
-                            userProfile={userProfile}
-                            onAddDocument={handleAddDocument} 
-                            onReportGenerated={handleReportGenerated}
-                            onConsumeTokens={handleConsumeTokens}
-                        />;
+                return <Messaging
+                    user={user}
+                    userProfile={userProfile}
+                    onAddDocument={handleAddDocument}
+                    onReportGenerated={handleReportGenerated}
+                    onConsumeTokens={handleConsumeTokens}
+                />;
             case 'timeline':
             default:
-                return <IncidentTimeline 
-                            reports={reports} 
-                            onDiscussIncident={handleDiscussIncident}
-                            onAnalyzeIncident={handleAnalyzeIncident}
-                            {...selectionProps}
-                        />;
+                return <IncidentTimeline
+                    reports={reports}
+                    onDiscussIncident={handleDiscussIncident}
+                    onAnalyzeIncident={handleAnalyzeIncident}
+                    {...selectionProps}
+                />;
         }
     };
-    
+
     const isChatView = view === 'new_report' || view === 'assistant' || view === 'messaging';
 
     return (
         <div className="h-[100dvh] bg-gray-100 flex flex-col">
-            <Header 
-                onMenuClick={() => setIsSidebarOpen(prev => !prev)} 
+            <Header
+                onMenuClick={() => setIsSidebarOpen(prev => !prev)}
                 onProfileClick={() => handleViewChange('profile')}
                 onAgentClick={handleAgentClick}
                 onLogoutClick={handleLogout}
                 tokens={userProfile?.tokens}
             />
             <div className="flex flex-1 pt-16 overflow-hidden relative">
-                 {isSidebarOpen && (
+                {isSidebarOpen && (
                     <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setIsSidebarOpen(false)} aria-hidden="true"></div>
                 )}
-                <Sidebar 
-                    activeView={view} 
-                    onViewChange={handleViewChange} 
+                <Sidebar
+                    activeView={view}
+                    onViewChange={handleViewChange}
                     reportCount={reports.length}
                     isOpen={isSidebarOpen}
                     onLogout={handleLogout}
@@ -511,14 +511,14 @@ const App: React.FC = () => {
                     </div>
                 </main>
             </div>
-            
-            <BottomNav 
+
+            <BottomNav
                 activeView={view}
                 onViewChange={(v) => { handleViewChange(v); setIsSidebarOpen(false); }}
                 onMenuClick={() => setIsSidebarOpen(true)}
             />
 
-             {selectedReportIds.size > 0 && (view === 'timeline' || view === 'calendar') && (
+            {selectedReportIds.size > 0 && (view === 'timeline' || view === 'calendar') && (
                 <div className="fixed bottom-24 md:bottom-6 right-6 z-30 flex items-center gap-3 no-print">
                     <button
                         onClick={handleClearSelection}
@@ -535,11 +535,11 @@ const App: React.FC = () => {
                     </button>
                 </div>
             )}
-            
+
             <ScriptureModal isOpen={showScripture} onClose={() => setShowScripture(false)} />
-            
-            <UpgradeModal 
-                isOpen={showUpgradeModal} 
+
+            <UpgradeModal
+                isOpen={showUpgradeModal}
                 onClose={() => setShowUpgradeModal(false)}
                 currentTier={userProfile?.tier || 'Free'}
                 onUpgrade={handleUpgrade}

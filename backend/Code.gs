@@ -98,6 +98,9 @@ function router(e) {
       case 'saveSharedEventsBatch': result = saveSharedEventsBatch(params.userId, params.events); break;
       case 'getSharedEvents': result = getSharedEvents(params.userId); break;
       
+      // AI Proxy
+      case 'generateAI': result = generateAI(params.model, params.payload); break;
+      
       default: throw new Error('Unknown action: ' + action);
     }
     return response(result);
@@ -721,4 +724,33 @@ function getDocumentContent(userId, docId) {
     }
   }
   throw new Error("Document not found");
+}
+
+// --- AI PROXY ---
+
+function generateAI(model, payload) {
+  const props = PropertiesService.getScriptProperties();
+  const apiKey = props.getProperty('GEMINI_API_KEY');
+  if (!apiKey) throw new Error("Backend Configuration Error: GEMINI_API_KEY not set in Script Properties.");
+
+  // Default to flash if not specified
+  const modelName = model || 'gemini-1.5-flash';
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+
+  const options = {
+    'method': 'post',
+    'contentType': 'application/json',
+    'payload': JSON.stringify(payload),
+    'muteHttpExceptions': true
+  };
+
+  const response = UrlFetchApp.fetch(url, options);
+  const respCode = response.getResponseCode();
+  const respText = response.getContentText();
+
+  if (respCode >= 400) {
+    throw new Error(`AI API Error (${respCode}): ${respText}`);
+  }
+
+  return JSON.parse(respText);
 }

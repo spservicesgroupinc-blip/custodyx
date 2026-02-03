@@ -1,0 +1,34 @@
+:root {
+  --sat: env(safe-area-inset-top);
+  --sab: env(safe-area-inset-bottom);
+  --sal: env(safe-area-inset-left);
+  --sar: env(safe-area-inset-right);
+}
+
+html {
+    overscroll-behavior-y: none;
+    -webkit-tap-highlight-color: transparent;
+    height: 100%;
+}
+
+body {
+    user-select: none;
+    -webkit-user-select: none;
+    min-height: 100%;
+    /* Ensure content assumes full width/height */
+}
+
+/* Allow text selection in inputs and content areas that need it */
+input, textarea, .selectable, [contenteditable="true"] {
+    user-select: text;
+    -webkit-user-select: text;
+}
+
+/* Scrollbar hiding utilities */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

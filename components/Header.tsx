@@ -28,27 +28,27 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, onProfileClick, onAgentCli
     }, []);
 
     return (
-        <header className="bg-blue-950 border-b border-blue-800 fixed top-0 left-0 right-0 z-20 shadow-sm">
+        <header className="bg-blue-950 border-b border-blue-800 fixed top-0 left-0 right-0 z-20 shadow-sm pt-[env(safe-area-inset-top)] h-[calc(4rem+env(safe-area-inset-top))]">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
                     <div className="flex items-center">
-                        <button 
-                            onClick={onMenuClick} 
-                            className="mr-2 p-2 rounded-full text-gray-300 hover:bg-blue-900 hidden md:block lg:hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-white" 
+                        <button
+                            onClick={onMenuClick}
+                            className="mr-2 p-2 rounded-full text-gray-300 hover:bg-blue-900 hidden md:block lg:hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
                             aria-label="Open menu"
                         >
                             <MenuIcon className="h-6 w-6" />
                         </button>
                         <div className="flex items-center">
-                           <BookOpenIcon className="h-8 w-8 text-white" />
-                           <div className="ml-3 flex flex-col">
+                            <BookOpenIcon className="h-8 w-8 text-white" />
+                            <div className="ml-3 flex flex-col">
                                 <span className="text-xl font-semibold text-white tracking-tight leading-none">
                                     VerityNow<span className="text-blue-400 font-medium">.ai</span>
                                 </span>
                                 <span className="text-[0.65rem] text-blue-200 uppercase tracking-wider leading-none mt-0.5">
                                     An R² Technologies Project
                                 </span>
-                           </div>
+                            </div>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -58,7 +58,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, onProfileClick, onAgentCli
                         </div>
 
                         <div className="relative" ref={dropdownRef}>
-                            <button 
+                            <button
                                 onClick={() => setIsDropdownOpen(prev => !prev)}
                                 className="p-2 rounded-full text-gray-300 hover:bg-blue-900 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
                                 aria-label="Open user menu"
@@ -82,7 +82,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, onProfileClick, onAgentCli
                                         role="menuitem"
                                         tabIndex={-1}
                                     >
-                                        <UserCircleIcon className="w-5 h-5 text-gray-500"/>
+                                        <UserCircleIcon className="w-5 h-5 text-gray-500" />
                                         <span>My Profile</span>
                                     </button>
                                     <button
@@ -94,7 +94,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, onProfileClick, onAgentCli
                                         role="menuitem"
                                         tabIndex={-1}
                                     >
-                                        <SparklesIcon className="w-5 h-5 text-gray-500"/>
+                                        <SparklesIcon className="w-5 h-5 text-gray-500" />
                                         <span>AI Agent</span>
                                     </button>
                                     <div className="border-t border-gray-100 my-1"></div>
@@ -107,7 +107,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, onProfileClick, onAgentCli
                                         role="menuitem"
                                         tabIndex={-1}
                                     >
-                                        <ArrowRightOnRectangleIcon className="w-5 h-5 text-red-500"/>
+                                        <ArrowRightOnRectangleIcon className="w-5 h-5 text-red-500" />
                                         <span>Sign Out</span>
                                     </button>
                                 </div>

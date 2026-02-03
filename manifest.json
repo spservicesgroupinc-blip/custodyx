@@ -1,0 +1,22 @@
+
+{
+  "name": "VerityNow.AI",
+  "short_name": "VerityNow",
+  "description": "A neutral co-parenting incident tracker powered by AI to help divorced or separated parents log and analyze incidents.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f9fafb",
+  "theme_color": "#1e3a8a",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
